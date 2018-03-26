@@ -1,9 +1,18 @@
-# Motivation
+## Jest Retry
 
-E2E test failures due to reasons outside the domain of code.  
+###  Motivation
 
-Ex: Network timeouts, flaky endpoints etc.
+E2E test failures due to reasons outside the domain of source code, including:
 
+1) Network timeouts
+1) Flaky endpoints etc.
+1) Login issues
+1) etc.
+
+### Setup
+Create a run-config to pass into `jest-retry`
+
+### Example run
 ```
 require('jest-retry')({
     debug: false,
