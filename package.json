@@ -1,0 +1,40 @@
+{
+  "name": "jest-retry",
+  "version": "1.0.0",
+  "description": "UI E2E Retry Pattern for Jest",
+  "main": "index.js",
+  "scripts": {
+    "test": "./src/run-tests.js",
+    "lint": "eslint ./src"
+  },
+  "engines": {
+    "node": "8.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bZichett/jest-retry"
+  },
+  "author": "<Benjamin Zichettello> bzichett@gmail.com",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "jest": "22.4.3",
+    "jest-cli": "22.4.3",
+    "jest-junit": "3.4.0",
+    "yargs": "10.0.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ]
+  }
+}
