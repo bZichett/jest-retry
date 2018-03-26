@@ -1,4 +1,4 @@
-## Jest Retry
+## J(e/u)st Retry
 
 ###  Motivation
 

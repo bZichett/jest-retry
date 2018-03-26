@@ -1,6 +1,6 @@
 {
   "name": "jest-retry",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "UI E2E Retry Pattern for Jest",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,7 @@
   },
   "author": "<Benjamin Zichettello> bzichett@gmail.com",
   "license": "ISC",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "eslint": "4.19.1",
     "jest": "22.4.3",
     "jest-cli": "22.4.3",
