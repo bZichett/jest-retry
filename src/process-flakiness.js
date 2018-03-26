@@ -9,17 +9,15 @@ function processFlakiness(testResults, retryPatterns, flakyMarkAll) {
     testResult => testResult.numFailingTests > 0
   );
 
-  const flakyFailingTests = flakyMarkAll
-    ? failingTests
-    : failingTests.filter(testResult => {
-      return retryPatterns.some(errorMessage => {
-        const isFlaky = testResult.failureMessage.includes(errorMessage);
-        if (isFlaky) {
-          flakyDictionaryCount[errorMessage] += 1;
-        }
-        return isFlaky;
-      });
-    });
+  const flakyFailingTests = failingTests.filter(testResult =>
+    retryPatterns.some(errorMessage => {
+      const isFlaky = testResult.failureMessage.includes(errorMessage);
+      if (isFlaky) {
+        flakyDictionaryCount[errorMessage] += 1;
+      }
+      return flakyMarkAll || isFlaky;
+    })
+  );
 
   if (flakyFailingTests.length !== failingTests.length) {
     return false;
