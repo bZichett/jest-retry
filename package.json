@@ -4,7 +4,7 @@
   "description": "UI E2E Retry Pattern for Jest",
   "main": "index.js",
   "scripts": {
-    "test": "./src/run-tests.js",
+    "test": "./test/run.js",
     "lint": "eslint ./src"
   },
   "engines": {

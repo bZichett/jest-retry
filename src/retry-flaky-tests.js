@@ -33,13 +33,13 @@ function retryIfFlakyTests({
     _: null
   });
 
-  console.log('\nflakyDictionaryCount', flakyDictionaryCount, '\n');
+  console.log(nW(`flakyDictionaryCount: ${JSON.stringify(flakyDictionaryCount, null, 4)}`));
 
   if (flakyOptions.flakyTestMock && retryNumber === 1) {
     process.env.SKIP = true;
   }
 
-  console.log(nW('===============================================\n'));
+  console.log('===============================================\n');
 
   setTimeout(() => {
     jest.runCLI(updatedConfig, testDirs).then(response => {
@@ -51,7 +51,7 @@ function retryIfFlakyTests({
       }
 
       if (flakyResults.success) {
-        console.log(nW('All failures have now passed'));
+        console.log('\nAll failures have now passed');
         return done(true);
       }
 

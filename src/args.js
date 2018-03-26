@@ -33,7 +33,7 @@ function getOptions(runConfig) {
       type: 'boolean'
     },
     flakyTestMockDir: {
-      default: 'test-mocks',
+      default: 'test',
       description: 'Directory where mock tests are stored'
     },
     flakyFailureMessages: {

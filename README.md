@@ -1,4 +1,4 @@
-## J(e/u)st Retry
+## J<sup>e</sup>&frasl;<sub>u</sub>st Retry
 
 ###  Motivation
 

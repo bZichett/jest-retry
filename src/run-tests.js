@@ -17,7 +17,9 @@ function runTests(runConfig) {
   process.env.JEST_JUNIT_OUTPUT = path.resolve(rootDir, argv.testResultsOutput);
 
   // Multi-line string parameter passed from job
-  if (argv.flakyFailureMessages && argv.flakyFailureMessages[0].includes('\n')) {
+  if (argv.flakyFailureMessages &&
+    argv.flakyFailureMessages[0] &&
+    argv.flakyFailureMessages[0].includes('\n')) {
     argv.flakyFailureMessages = argv.flakyFailureMessages[0].split('\n');
   }
 
