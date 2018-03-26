@@ -1,6 +1,6 @@
 {
   "name": "jest-retry",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "UI E2E Retry Pattern for Jest",
   "main": "index.js",
   "scripts": {
