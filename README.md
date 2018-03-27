@@ -13,7 +13,7 @@ E2E test failures due to reasons outside the domain of source code, including:
 Create a run-config to pass into `jest-retry`
 
 ### Example run
-```
+```js
 require('jest-retry')({
     debug: false,
     testDir: 'src/tests',
@@ -32,5 +32,5 @@ require('jest-retry')({
     // Jest options
     setupTestFrameworkScriptFile: 'jest-config.js',
     maxWorkers: 1
-}
+});
 ```
