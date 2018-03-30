@@ -50,8 +50,10 @@ function runTests(runConfig) {
     testEnvironment: 'node'
   };
 
-  console.log('jestConfig', jestConfig);
-  console.log('flakyOptions', flakyOptions);
+  if (argv.debug) {
+    console.log('jestConfig', jestConfig);
+    console.log('flakyOptions', flakyOptions);
+  }
 
   jest.runCLI(jestConfig, testDirs).then(response => {
     if (response.results.success) {
