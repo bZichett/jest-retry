@@ -56,11 +56,11 @@ function runTests(runConfig) {
   }
 
   jest.runCLI(jestConfig, testDirs).then(response => {
-    if (response.results.success) {
-      if (flakyOptions.outputTestResults) {
-        jestJunit(response.results);
-      }
+    if (flakyOptions.outputTestResults) {
+      jestJunit(response.results);
+    }
 
+    if (response.results.success) {
       return process.exit(0);
     }
 
