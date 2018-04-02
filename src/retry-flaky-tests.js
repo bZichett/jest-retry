@@ -34,6 +34,7 @@ function retryIfFlakyTests({
   });
 
   console.log(nW(`flakyDictionaryCount: ${JSON.stringify(flakyDictionaryCount, null, 4)}`));
+  console.log(nW('Retrying the following test suites: ', flakyFailingTestPaths))
 
   if (flakyOptions.flakyTestMock && retryNumber === 1) {
     process.env.SKIP = true;
