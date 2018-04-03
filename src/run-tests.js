@@ -39,7 +39,7 @@ function runTests(runConfig) {
     : [path.resolve(rootDir, argv.testDir)];
 
   const jestConfig = {
-    _: argv._ || argv.testFilter,
+    _: argv.testFilter ? [argv.testFilter] : argv._,
     roots: testDirs,
     maxWorkers: argv.maxWorkers,
     debug: argv.debug,
