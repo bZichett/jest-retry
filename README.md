@@ -22,9 +22,9 @@ require('jest-retry')({
     // jest-junit is currently the only option
     outputTestResults: true,
     testResultsOutput: '.',
-    
+
     // Test retry options
-    flakyNumRetries: 2, // 0 for disable retry pattern
+    flakyNumRetries: 2, // 0 for disable retry pattern or Infinity for continue running until getting same results
     flakyTestMock: false,
     flakyTestMockDir: 'src/mocks',
     flakyFailureMessages: ['Network timeout'],
@@ -38,7 +38,7 @@ require('jest-retry')({
 
 ### Test
 
-`npm run test` runs a short 2 test suite in which 
+`npm run test` runs a short 2 test suite in which
 a failure occurs and is forced to pass on the second retry
 
 #### Test output
@@ -54,7 +54,7 @@ a failure occurs and is forced to pass on the second retry
   ● mocks/conditional-fail › conditionally fails
 
     expect(received).toBe(expected) // Object.is equality
-    
+
     Expected value to be:
       false
     Received:
@@ -65,8 +65,8 @@ a failure occurs and is forced to pass on the second retry
     > 3 |     if (!process.env.SKIP) expect(true).toBe(false);
       4 |   });
       5 | });
-      6 | 
-      
+      6 |
+
       at Object.it (test/conditional-fail.test.js:3:41)
 
 Test Suites: 1 failed, 1 passed, 2 total
