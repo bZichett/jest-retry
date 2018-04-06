@@ -22,6 +22,7 @@ function getOptions(runConfig) {
     // Test retry options
     flakyNumRetries: {
       // if 0, no retries (disable functionality)
+      // if Infinity, keep retrying until duplicate result
       default: runConfig.flakyNumRetries || 0,
       type: 'number',
       description:

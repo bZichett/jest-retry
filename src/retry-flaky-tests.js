@@ -5,6 +5,7 @@ const jestJunit = require('jest-junit');
 const { newLineWrap: nW } = require('./string');
 const processFlakiness = require('./process-flakiness');
 const processTestResults = require('./process-test-results');
+let prevResults = '';
 
 function retryIfFlakyTests({
   results: lastResults,
@@ -61,6 +62,21 @@ function retryIfFlakyTests({
 
       if (retryNumber === flakyOptions.flakyNumRetries) {
         return done(`Max number of retries reached: ${retryNumber}`);
+      }
+
+      if (flakyOptions.flakyNumRetries === Infinity) {
+        const testResults = JSON.parse(JSON.stringify(lastResults.testResults)).map(res => {
+          delete res.perfStats;
+          res.testResults.forEach(it => {
+            delete it.duration;
+          });
+          return res;
+        });
+        const strTestResults = JSON.stringify(testResults);
+        if (prevResults === strTestResults) {
+          return done(`Stoped after ${retryNumber} retries with same results`);
+        }
+        prevResults = strTestResults;
       }
 
       retryIfFlakyTests({

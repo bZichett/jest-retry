@@ -4,7 +4,7 @@ module.exports = {
   testDir: 'test',
   testResultsOutput: 'junit.xml',
   flakyTestMock: true,
-  flakyNumRetries: 1,
+  flakyNumRetries: Infinity,
   flakyWaitBeforeRerun: false,
   flakyMarkAll: false,
   flakyFailureMessages: []
