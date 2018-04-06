@@ -1,6 +1,6 @@
 {
   "name": "jest-retry",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "UI E2E Retry Pattern for Jest",
   "main": "index.js",
   "scripts": {
@@ -21,9 +21,11 @@
     "jest-junit": "3.4.0",
     "yargs": "10.0.3"
   },
+  "devDependencies": {
+    "jest-cli": ">=22.4.3"
+  },
   "peerDependencies": {
-    "jest": ">=20.0.0 < 23",
-    "jest-cli": ">=20.0.0 < 23"
+    "jest": ">=22.0.0 < 23"
   },
   "eslintConfig": {
     "parserOptions": {
