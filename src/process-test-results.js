@@ -11,7 +11,8 @@ function processTestResults(lastResults, flakyResults) {
     if (outdatedResult) {
       outdatedResult.testResults.forEach((result, idx) => {
         if (result.status === 'failed') {
-          flaky.testResults[idx].title += ' FLAKY';
+          // Conflicts with flakyNumRetries=Infinity
+          // flaky.testResults[idx].title += ' FLAKY';
         }
       });
 

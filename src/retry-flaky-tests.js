@@ -3,9 +3,11 @@ const jest = require('jest-cli');
 const jestJunit = require('jest-junit');
 
 const { newLineWrap: nW } = require('./string');
+const deepEqual = require('./deep-equal');
 const processFlakiness = require('./process-flakiness');
 const processTestResults = require('./process-test-results');
-let prevResults = '';
+
+let previousFailureMap = {};
 
 function retryIfFlakyTests({
   results: lastResults,
@@ -54,7 +56,7 @@ function retryIfFlakyTests({
       }
 
       if (flakyResults.success) {
-        console.log('\nAll failures have now passed');
+        console.log(`\nAll failures have now passed after ${retryNumber} runs`);
         return done(true);
       }
 
@@ -65,18 +67,22 @@ function retryIfFlakyTests({
       }
 
       if (flakyOptions.flakyNumRetries === Infinity) {
-        const testResults = JSON.parse(JSON.stringify(lastResults.testResults)).map(res => {
-          delete res.perfStats;
-          res.testResults.forEach(it => {
-            delete it.duration;
-          });
-          return res;
-        });
-        const strTestResults = JSON.stringify(testResults);
-        if (prevResults === strTestResults) {
-          return done(`Stoped after ${retryNumber} retries with same results`);
+        const thisFailureMap = {}
+        lastResults.testResults.map((result) => {
+          if (result.numFailingTests) {
+            result.testResults.forEach(it => {
+              if(it.status === 'failed') {
+                thisFailureMap[it.fullName] = true
+              }
+            });
+          }
+        })
+
+        if (deepEqual(previousFailureMap, thisFailureMap)) {
+          return done(`Stopped after ${retryNumber} retries with same results`);
         }
-        prevResults = strTestResults;
+
+        previousFailureMap = thisFailureMap;
       }
 
       retryIfFlakyTests({
