@@ -57,7 +57,7 @@ function retryIfFlakyTests({
       }
 
       if (flakyResults.success) {
-        console.log(`\nAll failures have now passed after ${retryNumber} runs`);
+        console.log(`\nAll failures have now passed after ${retryNumber} run${retryNumber !== 1 ? 's' : ''}`);
         return done(true);
       }
 
