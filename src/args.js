@@ -1,7 +1,8 @@
 function getOptions(runConfig) {
   return {
     debug: {
-      default: false
+      default: false,
+      type: 'boolean'
     },
     testDir: {
       default: runConfig.testDir || 'src/tests'
