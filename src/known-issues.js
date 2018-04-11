@@ -17,8 +17,7 @@ function passesWithoutKnownIssues(knownIssueArray, results) {
     return true
   })
 
-  if (fails) return { passes: false }
-  else       return { passes: true, knownIssuePaths }
+  return { knownIssuePaths, passes: !fails }
 }
 
 module.exports = passesWithoutKnownIssues

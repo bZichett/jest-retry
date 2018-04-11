@@ -92,6 +92,7 @@ function retryIfFlakyTests({
         jestConfig,
         testDirs,
         flakyOptions,
+        knownIssuePaths,
         retryNumber: retryNumber + 1,
         done
       });
