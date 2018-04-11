@@ -45,7 +45,7 @@ function getOptions(runConfig) {
       type: 'array'
     },
     knownIssues: {
-      default: runConfig.knownIssues,
+      default: runConfig.knownIssues || [],
       description:
         'newline separated strings which are regarded as known issues and do not count towards failures',
       type: 'array'
