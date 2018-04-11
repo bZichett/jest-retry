@@ -40,7 +40,13 @@ function getOptions(runConfig) {
     flakyFailureMessages: {
       default: runConfig.flakyFailureMessages,
       description:
-        '";" separated strings which are regarded as flaky and marked to re-run',
+        'newline separated strings which are regarded as flaky and marked to re-run',
+      type: 'array'
+    },
+    knownIssues: {
+      default: runConfig.knownIssues,
+      description:
+        'newline separated strings which are regarded as known issues and do not count towards failures',
       type: 'array'
     },
     flakyMarkAll: {

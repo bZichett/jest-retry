@@ -6,6 +6,7 @@ const { newLineWrap: nW } = require('./string');
 const deepEqual = require('./deep-equal');
 const processFlakiness = require('./process-flakiness');
 const processTestResults = require('./process-test-results');
+const passesWithoutKnownIssues = require('./known-issues');
 
 let previousFailureMap = {};
 
@@ -57,6 +58,10 @@ function retryIfFlakyTests({
 
       if (flakyResults.success) {
         console.log(`\nAll failures have now passed after ${retryNumber} runs`);
+        return done(true);
+      }
+
+      if (passesWithoutKnownIssues(flakyOptions.knownIssues, flakyResults)) {
         return done(true);
       }
 

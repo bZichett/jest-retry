@@ -1,12 +1,15 @@
 /* eslint-disable no-console */
+
+
 const path = require('path');
 const jest = require('jest-cli');
 const yargs = require('yargs');
 const jestJunit = require('jest-junit');
 
 const getOptions = require('./args')
-const { newLineWrap: nW } = require('./string');
+const { newLineWrap: nW, multiLineParamToArray } = require('./string');
 const retryFlakyTests = require('./retry-flaky-tests');
+const passesWithoutKnownIssues = require('./known-issues')
 
 function runTests(runConfig) {
   const rootDir = process.cwd();
@@ -16,12 +19,9 @@ function runTests(runConfig) {
 
   process.env.JEST_JUNIT_OUTPUT = path.resolve(rootDir, argv.testResultsOutput);
 
-  // Multi-line string parameter passed from job
-  if (argv.flakyFailureMessages &&
-    argv.flakyFailureMessages[0] &&
-    argv.flakyFailureMessages[0].includes('\n')) {
-    argv.flakyFailureMessages = argv.flakyFailureMessages[0].split('\n');
-  }
+  // Multi-line string parameter passed from job, mutates input arguments
+  multiLineParamToArray(argv, 'flakyFailureMessages')
+  multiLineParamToArray(argv, 'knownIssues')
 
   const flakyOptions = {
     flakyWaitBeforeRerun: argv.flakyWaitBeforeRerun,
@@ -31,6 +31,7 @@ function runTests(runConfig) {
     flakyFailureMessages: argv.flakyTestMock
       ? ['Expected value to be']
       : argv.flakyFailureMessages,
+    knownIssues: argv.knownIssues,
     outputTestResults: argv.outputTestResults
   };
 
@@ -60,7 +61,7 @@ function runTests(runConfig) {
       jestJunit(response.results);
     }
 
-    if (response.results.success) {
+    if (response.results.success || passesWithoutKnownIssues(argv.knownIssues, response.results)) {
       return process.exit(0);
     }
 
