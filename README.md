@@ -23,11 +23,17 @@ require('jest-retry')({
     outputTestResults: true,
     testResultsOutput: '.',
 
-    // Test retry options
-    flakyNumRetries: 2, // 0 for disable retry pattern or Infinity for continue running until getting same results
+    /* Test retry options */
     flakyTestMock: false,
     flakyTestMockDir: 'src/mocks',
     flakyFailureMessages: ['Network timeout'],
+    
+    // Matches to test failures `testFilePath` 
+    // These are still marked as fail, but does not contribute to jest exiting with failure status
+    knownIssues: ['src/test/known-issue.test'],
+    
+    flakyNumRetries: 2, // 0 for disable retry pattern or Infinity for continue running until getting same results
+       
     flakyMarkAll: false,
     flakyWaitBeforeRerun: 1000,
     // Jest options
