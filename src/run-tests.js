@@ -61,12 +61,16 @@ function runTests(runConfig) {
       jestJunit(response.results);
     }
 
-    if (response.results.success || passesWithoutKnownIssues(argv.knownIssues, response.results)) {
-      return process.exit(0);
+    const { passes = false, knownIssuePaths = false } = argv.knownIssues.length
+      ? passesWithoutKnownIssues(argv.knownIssues, response.results)
+      : {}
+
+    if (response.results.success || passes) {
+      return finish(true, knownIssuePaths);
     }
 
     if (argv.flakyNumRetries === 0) {
-      return process.exit(1);
+      return finish(false, knownIssuePaths);
     }
 
     retryFlakyTests({
@@ -74,16 +78,26 @@ function runTests(runConfig) {
       jestConfig,
       testDirs,
       flakyOptions,
-      done: result => {
-        console.log(nW(`Test retries result: ${result}`));
-        if (result === true) {
-          process.exit(0); // Success
-        } else {
-          process.exit(1); // Fail
-        }
-      }
+      knownIssuePaths,
+      done: result => finish(result, knownIssuePaths)
     });
   });
+}
+
+function finish(result, knownIssuePaths = []) {
+  console.log(nW(`Test result: ${result ? 'Passed' : 'Failed'}`));
+  if (result === true) {
+
+    if (knownIssuePaths.length) {
+      /* eslint-disable no-console */
+      console.log("Considering this a successful test run although there are known issues: ")
+      console.log(JSON.stringify(knownIssuePaths, null, 2))
+    }
+
+    process.exit(0); // Success
+  } else {
+    process.exit(1); // Fail
+  }
 }
 
 module.exports = runTests

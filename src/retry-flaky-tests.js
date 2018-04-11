@@ -6,7 +6,6 @@ const { newLineWrap: nW } = require('./string');
 const deepEqual = require('./deep-equal');
 const processFlakiness = require('./process-flakiness');
 const processTestResults = require('./process-test-results');
-const passesWithoutKnownIssues = require('./known-issues');
 
 let previousFailureMap = {};
 
@@ -15,6 +14,7 @@ function retryIfFlakyTests({
   jestConfig,
   testDirs,
   flakyOptions,
+  knownIssuePaths,
   retryNumber = 1,
   done
 }) {
@@ -22,6 +22,7 @@ function retryIfFlakyTests({
 
   const flakyResults = processFlakiness(
     lastTestResults,
+    knownIssuePaths,
     flakyOptions.flakyFailureMessages,
     flakyOptions.flakyMarkAll
   );
@@ -58,10 +59,6 @@ function retryIfFlakyTests({
 
       if (flakyResults.success) {
         console.log(`\nAll failures have now passed after ${retryNumber} run${retryNumber !== 1 ? 's' : ''}`);
-        return done(true);
-      }
-
-      if (passesWithoutKnownIssues(flakyOptions.knownIssues, flakyResults)) {
         return done(true);
       }
 

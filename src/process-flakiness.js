@@ -1,4 +1,10 @@
-function processFlakiness(testResults, retryPatterns, flakyMarkAll) {
+function isKnownIssue(knownIssuePaths, testDir){
+  return knownIssuePaths && knownIssuePaths.find(issuePath =>
+    issuePath.includes(testDir)
+  )
+}
+
+function processFlakiness(testResults, knownIssuePaths, retryPatterns, flakyMarkAll) {
   // Counter for how many of each flaky failure scenario was detected
   const flakyDictionaryCount = retryPatterns.reduce((current, message) => {
     current[message] = 0;
@@ -25,7 +31,8 @@ function processFlakiness(testResults, retryPatterns, flakyMarkAll) {
 
   const flakyFailingTestPaths = flakyFailingTests
     .map(testResult => testResult.testFilePath)
-    .filter((testDir, idx, array) => array.indexOf(testDir) === idx); // unique
+    .filter((testDir, idx, array) => array.indexOf(testDir) === idx) // unique
+    .filter((testDir) => !isKnownIssue(knownIssuePaths, testDir)); // remove known issues from being re-ran
 
   return {
     flakyDictionaryCount,

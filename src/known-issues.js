@@ -17,15 +17,8 @@ function passesWithoutKnownIssues(knownIssueArray, results) {
     return true
   })
 
-  if (fails) return false
-  else {
-    if (knownIssuePaths.length) {
-      /* eslint-disable no-console */
-      console.log("Considering this a successful test run although there are known issues: ")
-      console.log(JSON.stringify(knownIssuePaths, null, 2))
-    }
-    return true
-  }
+  if (fails) return { passes: false }
+  else       return { passes: true, knownIssuePaths }
 }
 
 module.exports = passesWithoutKnownIssues
