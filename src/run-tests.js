@@ -9,7 +9,6 @@ const jestJunit = require('jest-junit');
 const getOptions = require('./args')
 const { newLineWrap: nW, multiLineParamToArray } = require('./string');
 const retryFlakyTests = require('./retry-flaky-tests');
-const passesWithoutKnownIssues = require('./known-issues')
 
 function runTests(runConfig) {
   const rootDir = process.cwd();
@@ -61,16 +60,12 @@ function runTests(runConfig) {
       jestJunit(response.results);
     }
 
-    const { passes = false, knownIssuePaths = false } = argv.knownIssues.length
-      ? passesWithoutKnownIssues(argv.knownIssues, response.results)
-      : {}
-
-    if (response.results.success || passes) {
-      return finish(true, knownIssuePaths);
+    if (response.results.success) {
+      return finish(true);
     }
 
     if (argv.flakyNumRetries === 0) {
-      return finish(false, knownIssuePaths);
+      return finish(false);
     }
 
     retryFlakyTests({
@@ -78,22 +73,14 @@ function runTests(runConfig) {
       jestConfig,
       testDirs,
       flakyOptions,
-      knownIssuePaths,
-      done: result => finish(result, knownIssuePaths)
+      done: result => finish(result)
     });
   });
 }
 
-function finish(result, knownIssuePaths = []) {
+function finish(result) {
   console.log(nW(`Test result: ${result ? 'Passed' : 'Failed'}`));
   if (result === true) {
-
-    if (knownIssuePaths.length) {
-      /* eslint-disable no-console */
-      console.log("Considering this a successful test run although there are known issues: ")
-      console.log(JSON.stringify(knownIssuePaths, null, 2))
-    }
-
     process.exit(0); // Success
   } else {
     process.exit(1); // Fail

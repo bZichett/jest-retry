@@ -14,7 +14,6 @@ function retryIfFlakyTests({
   jestConfig,
   testDirs,
   flakyOptions,
-  knownIssuePaths,
   retryNumber = 1,
   done
 }) {
@@ -22,7 +21,6 @@ function retryIfFlakyTests({
 
   const flakyResults = processFlakiness(
     lastTestResults,
-    knownIssuePaths,
     flakyOptions.flakyFailureMessages,
     flakyOptions.flakyMarkAll
   );
@@ -92,7 +90,6 @@ function retryIfFlakyTests({
         jestConfig,
         testDirs,
         flakyOptions,
-        knownIssuePaths,
         retryNumber: retryNumber + 1,
         done
       });
