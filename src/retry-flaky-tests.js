@@ -26,7 +26,7 @@ function retryIfFlakyTests({
   );
 
   if (!flakyResults) {
-    done(nW('Found real failures'));
+    done(false, 'Found real failures');
   }
 
   const { flakyFailingTestPaths, flakyDictionaryCount } = flakyResults;
@@ -56,14 +56,13 @@ function retryIfFlakyTests({
       }
 
       if (flakyResults.success) {
-        console.log(`\nAll failures have now passed after ${retryNumber} run${retryNumber !== 1 ? 's' : ''}`);
-        return done(true);
+        return done(true, `All failures have now passed after ${retryNumber} run${retryNumber !== 1 ? 's' : ''}`);
       }
 
       console.log(nW('Retries have failures...'));
 
       if (retryNumber === flakyOptions.flakyNumRetries) {
-        return done(`Max number of retries reached: ${retryNumber}`);
+        return done(false, `Max number of retries reached: ${retryNumber}`);
       }
 
       if (flakyOptions.flakyNumRetries === Infinity) {
@@ -79,7 +78,7 @@ function retryIfFlakyTests({
         })
 
         if (deepEqual(previousFailureMap, thisFailureMap)) {
-          return done(`Stopped after ${retryNumber} retries with same results`);
+          return done(false, `Stopped after ${retryNumber} retries with same results`);
         }
 
         previousFailureMap = thisFailureMap;

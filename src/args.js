@@ -70,6 +70,12 @@ function getOptions(runConfig) {
         'set up the testing framework before each test.',
       type: 'string'
     },
+    noStackTrace: {
+      type: 'boolean',
+    },
+    silent: {
+      type: 'boolean',
+    },
     maxWorkers: {
       default: 1,
       alias: 'w',

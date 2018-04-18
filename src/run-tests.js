@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 
-
 const path = require('path');
 const jest = require('jest-cli');
 const yargs = require('yargs');
@@ -43,10 +42,12 @@ function runTests(runConfig) {
     roots: testDirs,
     maxWorkers: argv.maxWorkers,
     debug: argv.debug,
+    noStackTrace: argv.noStackTrace,
+    silent: argv.silent,
     runInBand: argv.maxWorkers === 1,
     setupTestFrameworkScriptFile:
-    argv.setupTestFrameworkScriptFile &&
-    path.resolve(rootDir, argv.setupTestFrameworkScriptFile),
+      argv.setupTestFrameworkScriptFile &&
+      path.resolve(rootDir, argv.setupTestFrameworkScriptFile),
     testEnvironment: 'node'
   };
 
@@ -61,11 +62,11 @@ function runTests(runConfig) {
     }
 
     if (response.results.success) {
-      return finish(true);
+      return done(true);
     }
 
     if (argv.flakyNumRetries === 0) {
-      return finish(false);
+      return done(false);
     }
 
     retryFlakyTests({
@@ -73,13 +74,15 @@ function runTests(runConfig) {
       jestConfig,
       testDirs,
       flakyOptions,
-      done: result => finish(result)
+      done: (result, message) => done(result, message)
     });
   });
 }
 
-function finish(result) {
-  console.log(nW(`Test result: ${result ? 'Passed' : 'Failed'}`));
+function done(result, message) {
+  console.log('\n')
+  if (message) console.log('Message: ', message)
+  console.log(`Test result: ${result ? 'Passed' : 'Failed'}`);
   if (result === true) {
     process.exit(0); // Success
   } else {

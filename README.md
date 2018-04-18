@@ -38,7 +38,9 @@ require('jest-retry')({
     flakyWaitBeforeRerun: 1000,
     // Jest options
     setupTestFrameworkScriptFile: 'jest-config.js',
-    maxWorkers: 1
+    maxWorkers: 1,
+    noStackTrace: false,
+    silent: false,
 });
 ```
 
