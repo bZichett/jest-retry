@@ -45,6 +45,7 @@ function runTests(runConfig) {
     noStackTrace: argv.noStackTrace,
     silent: argv.silent,
     runInBand: argv.maxWorkers === 1,
+    reporters: getReporter(argv.reporter),
     setupTestFrameworkScriptFile:
       argv.setupTestFrameworkScriptFile &&
       path.resolve(rootDir, argv.setupTestFrameworkScriptFile),
@@ -90,4 +91,10 @@ function done(result, message) {
   }
 }
 
+function getReporter(reporter) {
+  if (reporter !== 'false' && reporter === 'minimal') {
+    return [path.join(__dirname, 'minimal-reporter.js')]
+  }
+  return false
+}
 module.exports = runTests

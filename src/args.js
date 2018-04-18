@@ -70,10 +70,19 @@ function getOptions(runConfig) {
         'set up the testing framework before each test.',
       type: 'string'
     },
+    reporter: {
+      default: runConfig.reporter || false,
+      description:
+      'The path to a module that runs some code to configure or ' +
+      'set up the testing framework before each test.',
+      type: 'string'
+    },
     noStackTrace: {
+      default: runConfig.noStackTrace || false,
       type: 'boolean',
     },
     silent: {
+      default: runConfig.silent || false,
       type: 'boolean',
     },
     maxWorkers: {
