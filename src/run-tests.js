@@ -92,7 +92,7 @@ function done(result, message) {
 }
 
 function getReporter(reporter) {
-  if (reporter !== 'false' && reporter === 'minimal') {
+  if (reporter !== 'false' && reporter !== 'default' && reporter === 'minimal') {
     return [path.join(__dirname, 'minimal-reporter.js')]
   }
   return false
