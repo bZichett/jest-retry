@@ -42,6 +42,7 @@ function runTests(runConfig) {
     roots: testDirs,
     maxWorkers: argv.maxWorkers,
     debug: argv.debug,
+    passWithNoTests: true,
     noStackTrace: argv.noStackTrace,
     silent: argv.silent,
     runInBand: argv.maxWorkers === 1,
