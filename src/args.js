@@ -10,6 +10,9 @@ function getOptions(runConfig) {
     testFilter: {
       description: 'Narrow down the tests ran by regular expression'
     },
+    testNamePattern: {
+      description: 'Run only tests with a name that matches the regex'
+    },
     outputTestResults: {
       default: true,
       description:
@@ -48,6 +51,16 @@ function getOptions(runConfig) {
       default: runConfig.knownIssues || [],
       description:
         'newline separated strings which are regarded as known issues and do not count towards failures',
+      type: 'array'
+    },
+    excludeTags: {
+      default: runConfig.excludeTags || [],
+      description: 'comma separated list of suites to exclude',
+      type: 'array'
+    },
+    tags: {
+      default: runConfig.tags || [],
+      description: 'comma separated list of suites to include (all others excluded)',
       type: 'array'
     },
     flakyMarkAll: {
