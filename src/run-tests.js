@@ -93,10 +93,20 @@ function done(result, message) {
   }
 }
 
-function getReporter(reporter) {
-  if (reporter !== 'false' && reporter !== 'default' && reporter === 'minimal') {
-    return [path.join(__dirname, 'minimal-reporter.js')]
+function getReporter(reporters) {
+  if (reporters) {
+    if (!Array.isArray(reporters)) reporters = [reporters]
+
+    return reporters.map((reporter) => {
+      if (reporter && reporter.includes('/')) {
+        return path.resolve(reporter)
+      } else if (reporter !== 'false' && reporter !== 'default' && reporter === 'minimal') {
+        return path.join(__dirname, 'minimal-reporter.js')
+      }
+    })
   }
+
   return false
 }
+
 module.exports = runTests
