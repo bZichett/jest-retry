@@ -7,9 +7,6 @@
     "test": "./test/run.js",
     "lint": "eslint ./src"
   },
-  "engines": {
-    "node": "8.9.1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bZichett/jest-retry"
