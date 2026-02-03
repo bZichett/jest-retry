@@ -14,7 +14,7 @@
   "author": "<Benjamin Zichettello> bzichett@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "eslint": "4.19.1",
+    "eslint": "9.26.0",
     "jest-junit": "3.4.0",
     "yargs": "10.0.3"
   },
